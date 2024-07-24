@@ -14,10 +14,12 @@
                v-model="endTime"
                @input="handleEndTimeChange"
         /> | 
-        <button @click="saveStartTime">저장하기</button> <br>
+        <button @click="saveStartTime">저장하기</button> | 
         <button @click="saveHistoryTime">연서꺼 ^^ 저장하기</button> <br>
 
-        <span>적립 포인트 : {{reservePoint}} </span>
+        <span>적립 포인트 : {{reservePoint}} </span><br>
+
+        <span>합계 포인트 : </span> <button>확인</button>
         
     </div>
 
@@ -63,9 +65,6 @@ const saveStartTime = async () => {
         alert("시작시간과 종료시간을 입력해주세요.")
         return false;
     }
-    // 추후 종료시간 - 시작시간 계산하는 함수필요.
-    // 계산된 시간만큼 적립포인트 계산하기
-
     // 서버저장
     try {
 
@@ -73,8 +72,9 @@ const saveStartTime = async () => {
             first_time : firstTime.value,
             end_time : endTime.value
         })
-        alert("응답 값 : ", response.data)
+        console.info("send data : " , firstTime.value, " | " , endTime.value)
         if (response.data !== null) {
+            alert("포인트가 정상적으로 적립되었습니다.")
             reservePoint.value = response.data.reserve_point
         }else {
             
